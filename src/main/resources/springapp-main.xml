@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<import resource="springapp-orm.xml"/>
+	<import resource="springapp-business.xml"/>
+	<import resource="springapp-security.xml"/>
+	
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.umarashfaq.tyrion.domain"/>	
+	<context:component-scan base-package="com.umarashfaq.tyrion.business"/>
+	<context:component-scan base-package="com.umarashfaq.tyrion.util"/>
+	<context:component-scan base-package="com.umarashfaq.tyrion.dao"/>
+	<context:component-scan base-package="com.umarashfaq.tyrion.web"/>
+	
+	<aop:aspectj-autoproxy/>
+	
+	<tx:annotation-driven transaction-manager="transactionManager"  proxy-target-class="true"/> 	
+<!-- 	<context:component-scan base-package="com.emumba.sample" /> -->
+	
+	<bean id="timeZonePakistan" class="java.util.TimeZone" factory-method="getTimeZone">
+		<constructor-arg value="Asia/Karachi"/>
+	</bean>
+
+	<bean id="appEmailAddress" class="javax.mail.internet.InternetAddress">
+	    <property name="address" value="argoserver00@gmail.com"/>
+	    <property name="personal" value="Argo Server"/>
+    </bean>
+
+	<bean id="messageSource"
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="classpath:messages" />
+        <property name="defaultEncoding" value="UTF-8"/>
+<!--        <property name="fallbackToSystemLocale" value="false" />-->
+    </bean>
+</beans>
